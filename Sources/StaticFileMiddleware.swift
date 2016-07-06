@@ -6,15 +6,15 @@ struct StaticFileMiddleware: Middleware {
         //check in file system
         let filePath = "Resources" + request.path
         
+#if os(Linux)
+        let fileManager = NSFileManager.defaultManager()
+#else
         let fileManager = NSFileManager.default()
+#endif
         var isDir: ObjCBool = false
         
         let exists: Bool
-#if os(Linux)
-        exists = fileManager.fileExistsAtPath(filePath, isDirectory: &isDir)
-#else
         exists = fileManager.fileExists(atPath: filePath, isDirectory: &isDir)
-#endif
         if exists && !isDir {
             
             if let fileBody = NSData(contentsOfFile: filePath) {

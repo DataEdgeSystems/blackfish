@@ -45,11 +45,7 @@ public struct JSONParser {
     }
     
     func isDoubleValue(string: String) -> Bool {
-        #if os(Linux)
-            return string.containsString(".")
-        #else
-            return string.contains(".")
-        #endif
+        return string.contains(".")
     }
     
     func isStringValue(string: String) -> Bool {
@@ -173,11 +169,7 @@ public struct JSONParser {
         
         var array = [Any]()
         
-        #if os(Linux)
-            let components = string.componentsSeparatedByString(",")
-        #else
-            let components = string.components(separatedBy: ",")
-        #endif
+        let components = string.components(separatedBy: ",")
         
         for component in components {
             let component = component.trimWhitespace()

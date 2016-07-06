@@ -189,14 +189,8 @@ extension Response {
             if NSJSONSerialization.isValidJSONObject(json) {
                 
                 do {
-
-#if os(Linux)
-                    let json = try NSJSONSerialization.dataWithJSONObject(json, 
-                            options: .PrettyPrinted)
-#else
                     let json = try NSJSONSerialization.data(withJSONObject: json,
                             options: .prettyPrinted)
-#endif
                     data = Array(UnsafeBufferPointer(start: UnsafePointer<UInt8>(json.bytes), count: json.length))
                 } catch let errorMessage {
                     self.send(error: "Server error: \(errorMessage)")
